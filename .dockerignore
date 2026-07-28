@@ -1,0 +1,50 @@
+# Git
+.git
+.gitignore
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Ambientes virtuais
+.venv/
+venv/
+env/
+
+# VS Code
+.vscode/
+
+# Pytest
+.pytest_cache/
+
+# Ruff
+.ruff_cache/
+
+# Mypy / Ty
+.mypy_cache/
+.ty/
+
+# Alembic
+alembic/versions/__pycache__/
+
+# Arquivos locais
+.env
+.env.*
+
+# Sistema
+.DS_Store
+Thumbs.db
+
+# Uploads temporários
+uploads/
+
+# Logs
+*.log
+
+# Docker
+docker-compose.yml
+
+# Documentação
+README.md
