@@ -1,18 +1,37 @@
 services:
+  api:
+    build: .
+    container_name: LedgerFlow_api
+
+    ports:
+      - "8000:8000"
+
+    volumes:
+      - .:/app
+      - /app/.venv
+
+    environment:
+      DATABASE_URL: postgresql://postgres:postgres@db:5432/leadgerflow
+
+    depends_on:
+      - db
+
+
   db:
     image: postgres:17
-    container_name: postgres_upload_csv
+    container_name: postgres_LedgerFlow
 
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: upload_csv
+      POSTGRES_DB: leadgerflow
 
     ports:
       - "5433:5432"
 
     volumes:
-      - postgres_upload_csv_data:/var/lib/postgresql/data
+      - postgres_LedgerFlow_data:/var/lib/postgresql/data
+
 
 volumes:
-  postgres_upload_csv_data:
+  postgres_LedgerFlow_data:

@@ -1,5 +1,5 @@
 from datetime import date
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel
 
 
 class TransacaoBase(BaseModel):
@@ -12,10 +12,14 @@ class TransacaoCreate(TransacaoBase):
     pass
 
 
-class TransacaoResponse(TransacaoBase):
+class TransacaoResponse(BaseModel):
     id: int
+    data: date
+    descricao: str
+    valor: float
 
-    model_config = ConfigDict(from_attributes=True)
+    class Config:
+        from_attributes = True
 
 
 class UploadResponse(BaseModel):
