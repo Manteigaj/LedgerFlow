@@ -15,10 +15,11 @@ services:
 
     depends_on:
       - db
-
+      - redis
 
   db:
     image: postgres:17
+
     container_name: postgres_LedgerFlow
 
     environment:
@@ -32,6 +33,33 @@ services:
     volumes:
       - postgres_LedgerFlow_data:/var/lib/postgresql/data
 
+  redis:
+    image: redis:7-alpine
+
+    container_name: ledgerflow_redis
+
+    restart: always
+
+    ports:
+      - "6379:6379"
+
+  celery:
+    build: .
+
+    container_name: ledgerflow_celery
+
+    command: uv run celery -A app.workers.celery_app:celery worker --loglevel=info
+
+    volumes:
+      - .:/app
+      - /app/.venv
+
+    environment:
+      DATABASE_URL: postgresql://postgres:postgres@db:5432/leadgerflow
+
+    depends_on:
+      - db
+      - redis
 
 volumes:
   postgres_LedgerFlow_data:
