@@ -1,30 +1,30 @@
 import csv
 
 
-def ler_csv(conteudo: str):
-    leitor = csv.DictReader(conteudo.splitlines())
+def read_csv(content: str):
+    reader = csv.DictReader(content.splitlines())
 
-    dados = []
+    data = []
 
-    for linha in leitor:
-        dados.append(
+    for row in reader:
+        data.append(
             {
-                "data": linha["date"],
-                "descricao": linha["title"],
-                "valor": linha["amount"],
+                "date": row["date"],
+                "description": row["title"],
+                "amount": row["amount"],
             }
         )
 
-    return dados
+    return data
 
 
-def converter_valor(valor):
-    valor = valor.strip()
+def convert_amount(amount):
+    amount = amount.strip()
 
-    valor = valor.replace(" ", "")
+    amount = amount.replace(" ", "")
 
-    if "," in valor:
-        valor = valor.replace(".", "")
-        valor = valor.replace(",", ".")
+    if "," in amount:
+        amount = amount.replace(".", "")
+        amount = amount.replace(",", ".")
 
-    return float(valor)
+    return float(amount)

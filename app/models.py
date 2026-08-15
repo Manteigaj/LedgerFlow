@@ -8,23 +8,23 @@ class Base(DeclarativeBase):
     pass
 
 
-class Categoria(Base):
-    __tablename__ = "categorias"
+class Category(Base):
+    __tablename__ = "categories"
 
     id: Mapped[int] = mapped_column(primary_key=True)
-    nome: Mapped[str] = mapped_column(String(255))
+    name: Mapped[str] = mapped_column(String(255))
 
-    transacoes: Mapped[list["Transacao"]] = relationship(back_populates="categoria")
+    transactions: Mapped[list["Transaction"]] = relationship(back_populates="category")
 
 
-class Transacao(Base):
-    __tablename__ = "transacoes"
+class Transaction(Base):
+    __tablename__ = "transactions"
 
     id: Mapped[int] = mapped_column(primary_key=True)
-    data: Mapped[date]
-    descricao: Mapped[str] = mapped_column(String(255))
-    valor: Mapped[float] = mapped_column(Float)
+    date: Mapped[date]
+    description: Mapped[str] = mapped_column(String(255))
+    amount: Mapped[float] = mapped_column(Float)
 
-    categoria_id: Mapped[int | None] = mapped_column(ForeignKey("categorias.id"))
+    category_id: Mapped[int | None] = mapped_column(ForeignKey("categories.id"))
 
-    categoria: Mapped["Categoria"] = relationship(back_populates="transacoes")
+    category: Mapped["Category"] = relationship(back_populates="transactions")

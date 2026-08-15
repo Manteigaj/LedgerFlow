@@ -1,18 +1,19 @@
-from fastapi import APIRouter, UploadFile, File
+from fastapi import APIRouter, File, UploadFile
 from app.schemas import UploadResponse
-from app.workers.tasks import processar_csv
+from app.workers.tasks import process_csv
+
 
 router = APIRouter(prefix="/upload", tags=["Upload"])
 
 
 @router.post("/csv", response_model=UploadResponse)
-async def upload_csv(arquivo: UploadFile = File(...)):
-    conteudo = await arquivo.read()
-    texto = conteudo.decode("utf-8")
+async def upload_csv(file: UploadFile = File(...)):
+    content = await file.read()
+    text = content.decode("utf-8")
 
-    processar_csv.delay(texto)
+    process_csv.delay(text)
 
     return UploadResponse(
-        mensagem="Arquivo enviado para processamento.",
-        quantidade=0,
+        message="File sent for processing.",
+        quantity=0,
     )

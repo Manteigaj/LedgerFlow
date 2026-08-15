@@ -1,6 +1,7 @@
 services:
   api:
     build: .
+    user: "${UID}:${GID}"
     container_name: LedgerFlow_api
 
     ports:
@@ -11,7 +12,8 @@ services:
       - /app/.venv
 
     environment:
-      DATABASE_URL: postgresql://postgres:postgres@db:5432/leadgerflow
+      DATABASE_URL: postgresql://postgres:postgres@db:5432/ledgerflow
+      UV_CACHE_DIR: /tmp/uv-cache
 
     depends_on:
       - db
@@ -25,7 +27,7 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: leadgerflow
+      POSTGRES_DB: ledgerflow
 
     ports:
       - "5433:5432"
@@ -55,7 +57,7 @@ services:
       - /app/.venv
 
     environment:
-      DATABASE_URL: postgresql://postgres:postgres@db:5432/leadgerflow
+      DATABASE_URL: postgresql://postgres:postgres@db:5432/ledgerflow
 
     depends_on:
       - db

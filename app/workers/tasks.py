@@ -1,14 +1,14 @@
 from app.database import SessionLocal
-from app.services.processamento_service import processar_transacoes
+from app.services.processing_service import process_transactions
 from app.workers.celery_app import celery
 
 
 @celery.task
-def processar_csv(texto: str):
+def process_csv(text: str):
     db = SessionLocal()
 
     try:
-        processar_transacoes(db, texto)
+        process_transactions(db, text)
 
     finally:
         db.close()

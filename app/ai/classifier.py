@@ -1,13 +1,18 @@
-from dotenv import load_dotenv
 import os
-from langchain_openai import ChatOpenAI
-from langchain_core.prompts import ChatPromptTemplate
+from dotenv import load_dotenv
 from langchain_core.output_parsers import StrOutputParser
+from langchain_core.prompts import ChatPromptTemplate
+from langchain_openai import ChatOpenAI
+
 
 load_dotenv()
-chave_api = os.getenv("OPENAI_API_KEY")
 
-modelo = ChatOpenAI(model="gpt-5-mini", temperature=0)
+api_key = os.getenv("OPENAI_API_KEY")
+
+model = ChatOpenAI(
+    model="gpt-5-mini",
+    temperature=0,
+)
 
 parser = StrOutputParser()
 
@@ -15,29 +20,29 @@ prompt = ChatPromptTemplate.from_messages(
     [
         (
             "system",
-            """Você é um classificador financeiro.
+            """You are a financial transaction classifier.
 
-Escolha APENAS UMA categoria.
+Choose EXACTLY ONE category.
 
-Categorias:
+Categories:
 
-- Alimentação
-- Transporte
-- Saúde
-- Lazer
-- Mercado
-- Educação
-- Moradia
-- Outros
+- Food & Dining
+- Transportation
+- Health
+- Entertainment
+- Groceries
+- Education
+- Housing
+- Other
 
-Responda somente com o nome da categoria.
+Respond only with the category name.
 """,
         ),
         (
             "human",
-            """ Descrição:{descricao} """,
+            """Description: {description}""",
         ),
     ]
 )
 
-chain = prompt | modelo | parser
+chain = prompt | model | parser

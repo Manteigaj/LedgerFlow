@@ -1,27 +1,28 @@
 from datetime import date
+
 from pydantic import BaseModel
 
 
-class TransacaoBase(BaseModel):
-    data: date
-    descricao: str
-    valor: float
+class TransactionBase(BaseModel):
+    date: date
+    description: str
+    amount: float
 
 
-class TransacaoCreate(TransacaoBase):
+class TransactionCreate(TransactionBase):
     pass
 
 
-class TransacaoResponse(BaseModel):
+class TransactionResponse(BaseModel):
     id: int
-    data: date
-    descricao: str
-    valor: float
+    date: date
+    description: str
+    amount: float
 
     class Config:
         from_attributes = True
 
 
 class UploadResponse(BaseModel):
-    mensagem: str
-    quantidade: int
+    message: str
+    quantity: int
