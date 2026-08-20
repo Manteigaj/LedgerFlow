@@ -1,6 +1,8 @@
 services:
   api:
     build: .
+    env_file:
+      - .env
     user: "${UID}:${GID}"
     container_name: LedgerFlow_api
 
@@ -9,7 +11,7 @@ services:
 
     volumes:
       - .:/app
-      - /app/.venv
+      - api_venv:/app/.venv
 
     environment:
       DATABASE_URL: postgresql://postgres:postgres@db:5432/ledgerflow
@@ -47,6 +49,8 @@ services:
 
   celery:
     build: .
+    env_file:
+      - .env
 
     container_name: ledgerflow_celery
 
@@ -54,7 +58,7 @@ services:
 
     volumes:
       - .:/app
-      - /app/.venv
+      - celery_venv:/app/.venv
 
     environment:
       DATABASE_URL: postgresql://postgres:postgres@db:5432/ledgerflow
@@ -65,3 +69,5 @@ services:
 
 volumes:
   postgres_LedgerFlow_data:
+  api_venv:
+  celery_venv:

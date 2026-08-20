@@ -4,11 +4,11 @@ from app.workers.celery_app import celery
 
 
 @celery.task
-def process_csv(text: str):
+def process_csv(text: str, user_id: int):
     db = SessionLocal()
 
     try:
-        process_transactions(db, text)
+        process_transactions(db, text, user_id)
 
     finally:
         db.close()

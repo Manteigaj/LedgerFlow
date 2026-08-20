@@ -1,13 +1,15 @@
 from datetime import datetime
-
 from sqlalchemy.orm import Session
-
 from app.crud.category import get_or_create_category
 from app.models import Transaction
 from app.services.csv_service import convert_amount
 
 
-def save_transactions(db: Session, rows):
+def save_transactions(
+    db: Session,
+    rows,
+    user_id: int,
+):
     transactions = []
 
     for row in rows:
@@ -24,6 +26,7 @@ def save_transactions(db: Session, rows):
             description=row["description"],
             amount=convert_amount(row["amount"]),
             category_id=category.id,
+            user_id=user_id,
         )
 
         transactions.append(transaction)

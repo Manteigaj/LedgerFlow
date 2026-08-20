@@ -1,6 +1,5 @@
 from datetime import date
-
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 
 class TransactionBase(BaseModel):
@@ -26,3 +25,22 @@ class TransactionResponse(BaseModel):
 class UploadResponse(BaseModel):
     message: str
     quantity: int
+
+
+class UserCreate(BaseModel):
+    username: str = Field(min_length=3, max_length=255)
+    password: str = Field(min_length=8, max_length=128)
+
+
+class UserResponse(BaseModel):
+    id: int
+    username: str
+
+    model_config = {
+        "from_attributes": True,
+    }
+
+
+class LoginRequest(BaseModel):
+    username: str
+    password: str
