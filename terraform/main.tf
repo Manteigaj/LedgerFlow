@@ -41,6 +41,13 @@ resource "railway_variable" "postgres_db" {
   service_id     = railway_service.postgres.id
 }
 
+resource "railway_variable" "postgres_pgdata" {
+  name           = "PGDATA"
+  value          = "/var/lib/postgresql/data/pgdata"
+  environment_id = railway_project.ledgerflow.default_environment.id
+  service_id     = railway_service.postgres.id
+}
+
 # ---------------------------------------------------------
 # Redis
 # ---------------------------------------------------------
@@ -96,8 +103,10 @@ resource "railway_variable" "api_jwt_expiration" {
 }
 
 resource "railway_variable" "api_database_url" {
-  name           = "DATABASE_URL"
-  value          = "$${{postgres.DATABASE_URL}}"
+  name = "DATABASE_URL"
+
+  value = "postgresql://$${{postgres.POSTGRES_USER}}:$${{postgres.POSTGRES_PASSWORD}}@$${{postgres.RAILWAY_PRIVATE_DOMAIN}}:5432/$${{postgres.POSTGRES_DB}}"
+
   environment_id = railway_project.ledgerflow.default_environment.id
   service_id     = railway_service.api.id
 }
@@ -153,8 +162,10 @@ resource "railway_variable" "celery_jwt_expiration" {
 }
 
 resource "railway_variable" "celery_database_url" {
-  name           = "DATABASE_URL"
-  value          = "$${{postgres.DATABASE_URL}}"
+  name = "DATABASE_URL"
+
+  value = "postgresql://$${{postgres.POSTGRES_USER}}:$${{postgres.POSTGRES_PASSWORD}}@$${{postgres.RAILWAY_PRIVATE_DOMAIN}}:5432/$${{postgres.POSTGRES_DB}}"
+
   environment_id = railway_project.ledgerflow.default_environment.id
   service_id     = railway_service.celery.id
 }
