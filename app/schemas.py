@@ -1,5 +1,6 @@
 from datetime import date
-from pydantic import BaseModel, Field
+
+from pydantic import BaseModel, ConfigDict, Field
 
 
 class TransactionBase(BaseModel):
@@ -18,8 +19,7 @@ class TransactionResponse(BaseModel):
     description: str
     amount: float
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 
 class UploadResponse(BaseModel):
@@ -36,9 +36,7 @@ class UserResponse(BaseModel):
     id: int
     username: str
 
-    model_config = {
-        "from_attributes": True,
-    }
+    model_config = ConfigDict(from_attributes=True)
 
 
 class LoginRequest(BaseModel):
