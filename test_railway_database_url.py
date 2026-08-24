@@ -1,15 +1,24 @@
 import os
 
-from sqlalchemy.engine import make_url
+database_url = os.getenv("DATABASE_URL")
 
-DATABASE_URL = os.getenv("DATABASE_URL")
+print("DATABASE_URL exists:", database_url is not None)
 
-print("DATABASE_URL exists:", DATABASE_URL is not None)
+if database_url:
+    print("DATABASE_URL length:", len(database_url))
 
-if DATABASE_URL:
-    url = make_url(DATABASE_URL)
+    if "@" in database_url:
+        _, host_part = database_url.rsplit("@", 1)
+        print("Masked DATABASE_URL: ***@" + host_part)
+    else:
+        print("Masked DATABASE_URL: [no @ found]")
 
-    print("Driver:", url.drivername)
-    print("Host:", url.host)
-    print("Port:", url.port)
-    print("Database:", url.database)
+    print(
+        "Starts with postgresql:",
+        database_url.startswith("postgresql"),
+    )
+
+    print(
+        "Contains railway.internal:",
+        "railway.internal" in database_url,
+    )
