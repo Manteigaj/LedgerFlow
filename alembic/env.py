@@ -21,6 +21,30 @@ database_url = os.getenv("DATABASE_URL")
 if database_url is None:
     raise RuntimeError("DATABASE_URL não encontrada.")
 
+print("DATABASE_URL exists:", True)
+print("DATABASE_URL length:", len(database_url))
+print("DATABASE_URL starts with postgresql:", database_url.startswith("postgresql"))
+print("DATABASE_URL contains railway.internal:", "railway.internal" in database_url)
+
+try:
+    from sqlalchemy.engine import make_url
+
+    parsed_url = make_url(database_url)
+
+    print("SQLAlchemy URL parsing: SUCCESS")
+    print("Driver:", parsed_url.drivername)
+    print("Host:", parsed_url.host)
+    print("Port:", parsed_url.port)
+    print("Database:", parsed_url.database)
+    print("Username exists:", parsed_url.username is not None)
+    print("Password exists:", parsed_url.password is not None)
+
+except Exception as exc:
+    print("SQLAlchemy URL parsing: FAILED")
+    print("Error type:", type(exc).__name__)
+    print("Error:", exc)
+    raise
+
 config.set_main_option(
     "sqlalchemy.url",
     database_url,
