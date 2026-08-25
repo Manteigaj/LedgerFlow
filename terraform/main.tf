@@ -105,7 +105,7 @@ resource "railway_variable" "api_jwt_expiration" {
 resource "railway_variable" "api_database_url" {
   name = "DATABASE_URL"
 
-  value = value = "postgresql://${var.database_user}:${urlencode(var.database_password)}@postgres.railway.internal:5432/${var.database_name}"
+  value = "postgresql://${var.database_user}:${urlencode(var.database_password)}@postgres.railway.internal:5432/${var.database_name}"
 
   environment_id = railway_project.ledgerflow.default_environment.id
   service_id     = railway_service.api.id
@@ -164,7 +164,7 @@ resource "railway_variable" "celery_jwt_expiration" {
 resource "railway_variable" "celery_database_url" {
   name = "DATABASE_URL"
 
-  value = value = "postgresql://${var.database_user}:${urlencode(var.database_password)}@postgres.railway.internal:5432/${var.database_name}"
+  value = "postgresql://${var.database_user}:${urlencode(var.database_password)}@postgres.railway.internal:5432/${var.database_name}"
 
   environment_id = railway_project.ledgerflow.default_environment.id
   service_id     = railway_service.celery.id
