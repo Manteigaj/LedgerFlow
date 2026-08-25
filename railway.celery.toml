@@ -2,5 +2,6 @@
 dockerfilePath = "Dockerfile"
 
 [deploy]
-startCommand = "uv run python test_railway_database_url.py"
-restartPolicyType = "NEVER"
+startCommand = "uv run celery -A app.workers.celery_app:celery worker --loglevel=info"
+restartPolicyType = "ON_FAILURE"
+restartPolicyMaxRetries = 5
