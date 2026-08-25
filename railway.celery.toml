@@ -1,4 +1,4 @@
 [deploy]
-startCommand = "python -c \"import os; u=os.getenv('DATABASE_URL',''); print('DB_URL_LENGTH=',len(u)); print('DB_URL_PREFIX=',u[:30]); print('DB_URL_SUFFIX=',u[-30:]); print('HAS_POSTGRES_PREFIX=',u.startswith('postgresql://'))\""
+startCommand = "uv run celery -A app.workers.celery_app:celery worker --loglevel=info"
 restartPolicyType = "ON_FAILURE"
-restartPolicyMaxRetries = 1
+restartPolicyMaxRetries = 5

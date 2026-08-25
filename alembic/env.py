@@ -18,14 +18,12 @@ config = context.config
 
 database_url = os.getenv("DATABASE_URL")
 
-database_url = os.getenv("DATABASE_URL")
-
 if database_url is None:
     raise RuntimeError("DATABASE_URL não encontrada.")
 
 config.set_main_option(
     "sqlalchemy.url",
-    database_url,
+    database_url.replace("%", "%%"),
 )
 
 # Interpret the config file for Python logging.
