@@ -1,10 +1,10 @@
 services:
   api:
     build: .
+    container_name: LedgerFlow_api
+
     env_file:
       - .env
-    user: "${UID}:${GID}"
-    container_name: LedgerFlow_api
 
     ports:
       - "8000:8000"
@@ -47,10 +47,10 @@ services:
 
   celery:
     build: .
+    container_name: ledgerflow_celery
+
     env_file:
       - .env
-
-    container_name: ledgerflow_celery
 
     command: uv run celery -A app.workers.celery_app:celery worker --loglevel=info
 

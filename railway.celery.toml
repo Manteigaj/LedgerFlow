@@ -1,4 +1,3 @@
 [deploy]
-startCommand = "uv run celery -A app.workers.celery_app:celery worker --loglevel=info"
-restartPolicyType = "ON_FAILURE"
+startCommand = "uv run celery -A app.workers.celery_app:celery worker --loglevel=info --concurrency=2"
 restartPolicyMaxRetries = 5
