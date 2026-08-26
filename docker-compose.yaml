@@ -11,10 +11,10 @@ services:
 
     volumes:
       - .:/app
-      - api_venv:/app/.venv
 
     environment:
       DATABASE_URL: postgresql://postgres:postgres@db:5432/ledgerflow
+      REDIS_URL: redis://redis:6379/0
       UV_CACHE_DIR: /tmp/uv-cache
 
     depends_on:
@@ -23,7 +23,6 @@ services:
 
   db:
     image: postgres:17
-
     container_name: postgres_LedgerFlow
 
     environment:
@@ -39,7 +38,6 @@ services:
 
   redis:
     image: redis:7-alpine
-
     container_name: ledgerflow_redis
 
     restart: always
@@ -58,10 +56,11 @@ services:
 
     volumes:
       - .:/app
-      - celery_venv:/app/.venv
 
     environment:
       DATABASE_URL: postgresql://postgres:postgres@db:5432/ledgerflow
+      REDIS_URL: redis://redis:6379/0
+      UV_CACHE_DIR: /tmp/uv-cache
 
     depends_on:
       - db
@@ -69,5 +68,3 @@ services:
 
 volumes:
   postgres_LedgerFlow_data:
-  api_venv:
-  celery_venv:
