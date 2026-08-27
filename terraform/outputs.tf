@@ -22,3 +22,11 @@ output "redis_service_id" {
   description = "ID of the LedgerFlow Redis service"
   value       = railway_service.redis.id
 }
+
+output "postgres_tcp_proxy_domain" {
+  value = railway_tcp_proxy.postgres.domain
+}
+
+output "postgres_tcp_proxy_port" {
+  value = railway_tcp_proxy.postgres.proxy_port
+}

@@ -49,6 +49,16 @@ resource "railway_variable" "postgres_pgdata" {
 }
 
 # ---------------------------------------------------------
+# PostgreSQL TCP Proxy
+# ---------------------------------------------------------
+
+resource "railway_tcp_proxy" "postgres" {
+  application_port = 5432
+  environment_id   = railway_project.ledgerflow.default_environment.id
+  service_id       = railway_service.postgres.id
+}
+
+# ---------------------------------------------------------
 # Redis
 # ---------------------------------------------------------
 
